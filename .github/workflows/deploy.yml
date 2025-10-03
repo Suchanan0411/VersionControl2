@@ -30,4 +30,4 @@ jobs:
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/spa    # ✅ Quasar SPA build อยู่ที่นี่
+          publish_dir: ./dist/spa   # ✅ ต้องชี้ folder SPA ของ Quasar
