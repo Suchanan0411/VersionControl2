@@ -1,9 +1,9 @@
-name: Deploy Quasar Website
+name: Deploy Website
 
 on:
   push:
     branches:
-      - master   # หรือ main ถ้า repo ของคุณใช้ main
+      - master  # รันเมื่อ push branch master
 
 jobs:
   build-and-deploy:
@@ -12,22 +12,22 @@ jobs:
       contents: write
 
     steps:
-      # 1) Checkout source code
+      # clone repo
       - uses: actions/checkout@v3
 
-      # 2) ติดตั้ง Node.js (Quasar รองรับ LTS)
+      # setup node
       - uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # 3) ติดตั้ง dependencies
+      # install dependencies
       - run: npm install
 
-      # 4) Build โปรเจกต์ Quasar
+      # build project
       - run: npm run build
 
-      # 5) Deploy ขึ้น GitHub Pages
+      # deploy to GitHub Pages
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/spa   # ✅ ต้องชี้ folder SPA ของ Quasar
+          publish_dir: ./dist/spa  # ชี้ folder SPA ของ Quasar
