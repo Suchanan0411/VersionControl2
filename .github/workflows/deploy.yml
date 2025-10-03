@@ -1,22 +1,33 @@
-# .github/workflows/deploy.yml
-name: Deploy Website
+name: Deploy Quasar Website
+
 on:
   push:
     branches:
-      - master
+      - master   # หรือ main ถ้า repo ของคุณใช้ main
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      # 1) Checkout source code
+      - uses: actions/checkout@v3
+
+      # 2) ติดตั้ง Node.js (Quasar รองรับ LTS)
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
+
+      # 3) ติดตั้ง dependencies
       - run: npm install
+
+      # 4) Build โปรเจกต์ Quasar
       - run: npm run build
+
+      # 5) Deploy ขึ้น GitHub Pages
       - uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}   # ✅ ใช้ secret
-          publish_dir: ./dist/spa
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist/spa    # ✅ Quasar SPA build อยู่ที่นี่
